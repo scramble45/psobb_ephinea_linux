@@ -18,6 +18,7 @@ welcome () {
     echo "Welcome to the Ephinea PSO Blue Burst (GNU/Linux) Installer"
     echo
     echo "Please close Steam fully before continuing!"
+    echo "Now may be the time to plug-in a keyboard / mouse if using a Steam Deck"
     echo
     read -p "Are you ready to continue (y/n)?" choice
     case "$choice" in 
@@ -124,6 +125,12 @@ startInstall () {
     read -p "Do you want to launch Steam (y/n)?" choice
     case "$choice" in 
     y|Y ) steam &> /dev/null;;
+    * ) exit;;
+    esac
+
+    read -p "Have you fully closed Steam (y/n)?" choice
+    case "$choice" in 
+    y|Y ) echo;;
     * ) exit;;
     esac
 
