@@ -104,6 +104,7 @@ startInstall () {
     echo "Adding game to Steam, you will need to manually set which proton is used. GE-Proton should work well..."
     echo
     echo
+    # possible you may need to switch to using: /home/deck/stl/prefix/steamtinkerlaunch then the arguments below
     $HOME/Documents/steamtinkerlaunch/steamtinkerlaunch addnonsteamgame -an="Phantasy Star Online (Blue Burst)" -ep=$PSODIR/online.exe -lo="WINEDLLOVERRIDES='dinput8=n,b;d3d8=n,b' %command%"
     echo "---------------------------------------------------------------------------------"
     echo "We have to launch steam and you will need to set the compatibility to Proton"
