@@ -130,15 +130,16 @@ startInstall () {
     # Once Steam is close the rest of this can continue...
     # need to get the steam game id so we can do things in protontricks
     STEAMWINEID=$(flatpak run com.github.Matoking.protontricks -s "Phantasy Star Online (Blue Burst)" | grep -Po '(?<=\().*?(?=\))' |  tail -n1)
-    echo "Trying to install VC2019 through protontricks"
-    echo "Be sure to agree to any license agreement/EULA and click Install"
-
+    
     if [[ $STEAMWINEID =~ ^[0-9]+$ ]]
     then
+        clear
         echo "We found the installation..."
-        echo "Trying to install vcrun2019 using Proton tricks"
+        echo "Trying to install VC2019 through Proton tricks"
+        echo "Be sure to agree to any license agreement/EULA and click Install"
         flatpak run com.github.Matoking.protontricks $STEAMWINEID vcrun2019 &> /dev/null
 
+        clear
         echo "==================================="
         echo "      Installation Complete!"
         echo "==================================="
