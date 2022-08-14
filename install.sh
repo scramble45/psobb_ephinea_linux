@@ -107,7 +107,7 @@ startInstall () {
     # possible you may need to switch to using: /home/deck/stl/prefix/steamtinkerlaunch then the arguments below
     $HOME/Documents/steamtinkerlaunch/steamtinkerlaunch addnonsteamgame -an="Phantasy Star Online (Blue Burst)" -ep=$PSODIR/online.exe -lo="WINEDLLOVERRIDES='dinput8=n,b;d3d8=n,b' %command%"
     echo "---------------------------------------------------------------------------------"
-    echo "We have to launch steam and you will need to set the compatibility to Proton"
+    echo "We have to launch Steam and you will need to set the compatibility to Proton"
     echo "Within Steam do the following:"
     echo "  - Right click on: Phantasy Star Online (Blue Burst)"
     echo "  - Click on COMPATIBILITY"
@@ -118,7 +118,7 @@ startInstall () {
     echo "  - Click QUIT - from the Ephinea menu"
     echo "  - Fully exit Steam"
     echo
-    echo "Fully exit steam and the installer script will continue."
+    echo "Fully exit Steam and the installer script will continue."
     echo "Failing todo these step will result in a non-working game."
     echo "---------------------------------------------------------------------------------"
     echo
@@ -135,8 +135,8 @@ startInstall () {
     * ) exit;;
     esac
 
-    # Once Steam is close the rest of this can continue...
-    # need to get the steam game id so we can do things in protontricks
+    # Once Steam is closed the rest of this can continue...
+    # we need to get the steam game id so we can do things in protontricks
     STEAMWINEID=$(flatpak run com.github.Matoking.protontricks -s "Phantasy Star Online (Blue Burst)" | grep -Po '(?<=\().*?(?=\))' |  tail -n1)
     
     if [[ $STEAMWINEID =~ ^[0-9]+$ ]]
@@ -147,13 +147,16 @@ startInstall () {
         echo "Be sure to agree to any license agreement/EULA and click Install"
         flatpak run com.github.Matoking.protontricks $STEAMWINEID vcrun2019 &> /dev/null
 
+        reset
         clear
+        echo
         echo "==================================="
         echo "      Installation Complete!"
         echo "==================================="
         echo "If something didn't work you may try to just step through the commands passed in the script."
         echo
         echo "Please restart Steam"
+        echo "Once restarted, launch the game and set your game options in the Ephinea launcher, eg. 1280x800 for Steam Deck"
         exit
     else
         echo "Something went wrong, make sure you read all the instructions and try again."
