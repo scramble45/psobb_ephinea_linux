@@ -189,7 +189,7 @@ startInstall () {
         echo "Trying to install VC2019 and Corefonts through Proton tricks"
         echo "Be sure to agree to any license agreement/EULA and click Install"
         echo "This may take a little bit, it may seem stuck, its probably not. Just be patient."
-        flatpak run com.github.Matoking.protontricks $STEAMWINEID vcrun2019 corefonts &> /dev/null
+        flatpak run com.github.Matoking.protontricks $STEAMWINEID vcrun2019 corefonts win7 &> /dev/null
 
         reset
         echo "==================================="
