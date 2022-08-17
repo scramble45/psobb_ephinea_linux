@@ -132,7 +132,7 @@ startInstall () {
     echo
     echo
     # possible you may need to switch to using: /home/deck/stl/prefix/steamtinkerlaunch then the arguments below
-    $HOME/Documents/steamtinkerlaunch/steamtinkerlaunch addnonsteamgame -an="Phantasy Star Online: Blue Burst" -ep=$PSODIR/online.exe -lo="WINEDLLOVERRIDES='dinput8=n,b;d3d8=n,b' %command%"
+    $HOME/Documents/steamtinkerlaunch/steamtinkerlaunch addnonsteamgame -an="Phantasy Star Online: Blue Burst" -ep=$PSODIR/online.exe -lo="LANG=ja_JP.UTF-8 WINEDLLOVERRIDES='dinput8=n,b;d3d8=n,b' %command%"
     echo "---------------------------------------------------------------------------------"
     echo "We have to launch Steam and you will need to set the compatibility to Proton"
     echo "------------------------------------------------------------------------"
@@ -186,10 +186,10 @@ startInstall () {
         echo "Saving game icon to: ${HOME}/Downloads, you will need to manually set it in Steam at a later point."
         curl --create-dirs -O --output-dir $HOME/Downloads $ICON
 
-        echo "Trying to install VC2019 and Corefonts through Proton tricks"
+        echo "Trying to install VC2019 through Proton tricks"
         echo "Be sure to agree to any license agreement/EULA and click Install"
         echo "This may take a little bit, it may seem stuck, its probably not. Just be patient."
-        flatpak run com.github.Matoking.protontricks $STEAMWINEID vcrun2019 corefonts win7 &> /dev/null
+        flatpak run com.github.Matoking.protontricks $STEAMWINEID vcrun2019 &> /dev/null
 
         reset
         echo "==================================="
