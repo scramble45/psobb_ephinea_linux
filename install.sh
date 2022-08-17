@@ -14,8 +14,7 @@ STL=https://github.com/frostworx/steamtinkerlaunch.git
 ICON=https://cdn2.steamgriddb.com/file/sgdb-cdn/icon/0224cd598e48c5041c7947fd5cb20d53.png
 
 welcome () {
-    clear   
-    echo
+    clear
     echo
     echo "                                                    ▄░▀             "
     echo "  Welcome to the Ephinea PSO     ▀▄         ▄▄  ░▒▄     ▀▀          "
