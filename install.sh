@@ -14,7 +14,7 @@ STL=https://github.com/frostworx/steamtinkerlaunch.git
 ICON=https://cdn2.steamgriddb.com/file/sgdb-cdn/icon/0224cd598e48c5041c7947fd5cb20d53.png
 
 welcome () {
-    clear
+    clear   
     echo
     echo "                                                    ▄░▀             "
     echo "  Welcome to the Ephinea PSO     ▀▄         ▄▄  ░▒▄     ▀▀          "
@@ -113,7 +113,6 @@ depChecks () {
             * ) exit;;
         esac
     fi
-
 }
 
 # Main Installation Function
@@ -139,9 +138,12 @@ startInstall () {
     echo
     echo
     # possible you may need to switch to using: /home/deck/stl/prefix/steamtinkerlaunch then the arguments below
-    $HOME/Documents/steamtinkerlaunch/steamtinkerlaunch addnonsteamgame -an="Phantasy Star Online (Blue Burst)" -ep=$PSODIR/online.exe -lo="WINEDLLOVERRIDES='dinput8=n,b;d3d8=n,b' %command%"
+    $HOME/Documents/steamtinkerlaunch/steamtinkerlaunch addnonsteamgame -an="Phantasy Star Online: Blue Burst" -ep=$PSODIR/online.exe -lo="WINEDLLOVERRIDES='dinput8=n,b;d3d8=n,b' %command%"
     echo "---------------------------------------------------------------------------------"
-    echo "We have to launch steam and you will need to set the compatibility to Proton"
+    echo "We have to launch Steam and you will need to set the compatibility to Proton"
+    echo "------------------------------------------------------------------------"
+    echo "We have to launch Steam:"
+    echo
     echo "Within Steam do the following:"
     echo "  - Right click on: Phantasy Star Online (Blue Burst)"
     echo "  - Click on COMPATIBILITY"
@@ -171,18 +173,31 @@ startInstall () {
 
     # Once Steam is close the rest of this can continue...
     # need to get the steam game id so we can do things in protontricks
-    STEAMWINEID=$(flatpak run com.github.Matoking.protontricks -s "Phantasy Star Online (Blue Burst)" | grep -Po '(?<=\().*?(?=\))' |  tail -n1)
-    
+    STEAMWINEID=$(flatpak run com.github.Matoking.protontricks -s "Phantasy Star Online: Blue Burst" | grep -Po '(?<=\().*?(?=\))' |  tail -n1)
+
     if [[ $STEAMWINEID =~ ^[0-9]+$ ]]
     then
         clear
         echo "We found the installation..."
-        echo "Trying to install VC2019 through Proton tricks"
+        echo
+        # we will go ahead and setup some artwork for the game
+        # Steam Grid DB Artwork
+        echo "Adding game artwork from SteamDB - select Phantasy Star: Blue Burst from list and press: (Okay)"
+        echo "You will see this prompt four times. Repeat hitting: (Okay) all four times."
+        flatpak run com.steamgriddb.SGDBoop sgdb://boop/grid/89252/nonsteam &> /dev/null
+        flatpak run com.steamgriddb.SGDBoop sgdb://boop/grid/89255/nonsteam &> /dev/null
+        flatpak run com.steamgriddb.SGDBoop sgdb://boop/logo/16664/nonsteam &> /dev/null
+        flatpak run com.steamgriddb.SGDBoop sgdb://boop/hero/51229/nonsteam &> /dev/null
+
+        echo "Saving game icon to: ${HOME}/Downloads, you will need to manually set it in Steam at a later point."
+        curl --create-dirs -O --output-dir $HOME/Downloads $ICON
+
+        echo "Trying to install VC2019 and Corefonts through Proton tricks"
         echo "Be sure to agree to any license agreement/EULA and click Install"
         echo "This may take a little bit, it may seem stuck, its probably not. Just be patient."
         flatpak run com.github.Matoking.protontricks $STEAMWINEID vcrun2019 corefonts &> /dev/null
 
-        clear
+        reset
         echo "==================================="
         echo "      Installation Complete!"
         echo "==================================="
