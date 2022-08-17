@@ -1,4 +1,4 @@
-# Phantasy Star Online (Blue) 
+# Phantasy Star Online (Blue Burst) 
 ### This is the unoffical [Ephinea](https://ephinea.pioneer2.net/) (GNU/Linux) Installation Script
 
 ```
