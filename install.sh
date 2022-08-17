@@ -47,12 +47,6 @@ welcome () {
     esac
 }
 
-killSteamThings () {
-    clear
-    echo "Trying to kill all things Steam related."
-    pkill -f steam
-}
-
 depChecks () {
     clear
     if which flatpak >/dev/null; then
@@ -215,6 +209,5 @@ startInstall () {
 }
 
 welcome
-killSteamThings
 depChecks
 startInstall
