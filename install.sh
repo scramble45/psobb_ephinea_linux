@@ -3,19 +3,40 @@
 # Ephinea Phantasy Star Online - Blue Burst
 # Installation Script for (GNU/Linux)
 # https://ephinea.pioneer2.net/
-# by r0r0
-# specifically intended for use on Valve SteamDecks
-# however should work for systems that have a normal Steam Install
-# but also have flatpak
+# by: r0r0
+# Specifically intended for use on Valve SteamDeck
+# however should work for systems with flatpak
+# that have a normal non flatpak Steam Install
 
 FILE=/usr/bin/steamtinkerlaunch
 INSTALLER=https://files.pioneer2.net/Ephinea_PSOBB_Installer.exe
 STL=https://github.com/frostworx/steamtinkerlaunch.git
-PSOBB_BOX_ART=https://static.wikia.nocookie.net/phantasystar/images/b/bf/Psobb_box_segajp.jpg
+ICON=https://cdn2.steamgriddb.com/file/sgdb-cdn/icon/0224cd598e48c5041c7947fd5cb20d53.png
 
 welcome () {
-    clear
-    echo "Welcome to the Ephinea PSO Blue Burst (GNU/Linux) Installer"
+    clear   
+    echo
+    echo
+    echo "                                                    ▄░▀             "
+    echo "  Welcome to the Ephinea PSO     ▀▄         ▄▄  ░▒▄     ▀▀          "
+    echo "     (GNU/Linux) Installer        ▐▐  ▄▄   ▄▀ ▄                     "
+    echo "                                  ▌▌▄█▓▓▓▀ ░ ▀ ▄                    "
+    echo "                                  ▐▀▓▓█▌░▒▒      ░                  "
+    echo "                            ▄▄▄▄ ▐▒▄▓█▒░▒▒    ░ ░  ░                "
+    echo "                          ▓▄▄▄  ▒▀▀▀█▌▒░▒░ ▄▄     ░ ▐               "
+    echo "                           ▀▀██▓▓▄▒▒▓█▒▒  ▐█ █▌      ▀              "
+    echo "                             ▐██████▄▒▓▓▄  ▀▀▀        █             "
+    echo "      Rappy Noises           ▐ █████████▓▒▓▄          ░▄            "
+    echo "                             ▌ ██████████████▌        ░░▌           "
+    echo "         by: r0r0            ▌ ░████▒█▀█▓██▓▒▒      ░░▒░░▒          "
+    echo "                             ▌ ░█▒▒█▀▓███▓▓▓▓▒▒▒▒▓▒▒▒▒▒▒▒▐█         "
+    echo "                             ▀▒█▒▀▄▄██▓▓▓▓▒▒▒▒▒▒▒▒▒    ░░░▀▄        "
+    echo "     ▄▄▄                     ▐████▀░▒▒▒▒▒▒░▒  ░░       ░ ░░▀▄       "
+    echo "  ▀▀▓▀▐█▓▓                   ▐█░░▒   ▀▒░░              ░░░   ▀▄     "
+    echo " ▐▄▓█▓▀███▌                  █░░▒       ░               ▐░░░░░ ▒    "
+    echo "  ▓ ░░░░░░  ▀ ▄             ▄▌░▒                          ▒░░░░░ ▀  "
+    echo "▄▀ ░░▒▒█▒▒▄░      ▄       ▄▒░▒░                            ▀░░░░▒▒▒ "
+    echo "▌░░▒▒▒▒▒▒▒▒▒▒▒▒░    ▓▄  ▄▒▒▄▒▒▒                              ▒░░▒▒▓ "
     echo
     echo "Please close Steam fully before continuing!"
     echo "Now may be the time to plug-in a keyboard / mouse if using a Steam Deck"
@@ -81,13 +102,27 @@ depChecks () {
             * ) exit;;
         esac
     fi
+
+    # Check if SGDBoop is installed
+    if flatpak list | grep SGDBoop &> /dev/null; then
+        echo "Found existing SGDBoop installation..."
+    else
+        echo "SGDBoop - flatpak is needed to give you non-steam artwork for the game in Steam."
+        read -p "Do you want to continue with its installation (y/n)?" input
+        case "$input" in
+            y|Y ) flatpak install -y --noninteractive com.steamgriddb.SGDBoop ;;
+            * ) exit;;
+        esac
+    fi
+
 }
 
 # Main Installation Function
 startInstall () {
     if [ -f "$HOME/Downloads/Ephinea_PSOBB_Installer.exe" ]; then
         echo "Installer already exists, skipping download."
-    else 
+    else
+        echo
         echo "Downloading Ephinea PSO Blue Burst..."
         echo
         curl --create-dirs -O --output-dir $HOME/Downloads $INSTALLER
@@ -107,11 +142,11 @@ startInstall () {
     # possible you may need to switch to using: /home/deck/stl/prefix/steamtinkerlaunch then the arguments below
     $HOME/Documents/steamtinkerlaunch/steamtinkerlaunch addnonsteamgame -an="Phantasy Star Online (Blue Burst)" -ep=$PSODIR/online.exe -lo="WINEDLLOVERRIDES='dinput8=n,b;d3d8=n,b' %command%"
     echo "---------------------------------------------------------------------------------"
-    echo "We have to launch Steam and you will need to set the compatibility to Proton"
+    echo "We have to launch steam and you will need to set the compatibility to Proton"
     echo "Within Steam do the following:"
     echo "  - Right click on: Phantasy Star Online (Blue Burst)"
     echo "  - Click on COMPATIBILITY"
-    echo "  - Check the box for: Force the use of a specific Steam Play compatibility tool"
+    echo "  - Check: Force the use of a specific Steam Play compatibility tool"
     echo "  - Select GE-Proton or similar"
     echo "  - Exit the dialog box"
     echo "  - Click PLAY - the game options screen should open"
@@ -120,7 +155,7 @@ startInstall () {
     echo
     echo "Fully exit Steam and the installer script will continue."
     echo "Failing todo these step will result in a non-working game."
-    echo "---------------------------------------------------------------------------------"
+    echo "------------------------------------------------------------------------"
     echo
 
     read -p "Do you want to launch Steam (y/n)?" choice
@@ -135,8 +170,8 @@ startInstall () {
     * ) exit;;
     esac
 
-    # Once Steam is closed the rest of this can continue...
-    # we need to get the steam game id so we can do things in protontricks
+    # Once Steam is close the rest of this can continue...
+    # need to get the steam game id so we can do things in protontricks
     STEAMWINEID=$(flatpak run com.github.Matoking.protontricks -s "Phantasy Star Online (Blue Burst)" | grep -Po '(?<=\().*?(?=\))' |  tail -n1)
     
     if [[ $STEAMWINEID =~ ^[0-9]+$ ]]
@@ -145,16 +180,16 @@ startInstall () {
         echo "We found the installation..."
         echo "Trying to install VC2019 through Proton tricks"
         echo "Be sure to agree to any license agreement/EULA and click Install"
-        flatpak run com.github.Matoking.protontricks $STEAMWINEID vcrun2019 &> /dev/null
+        echo "This may take a little bit, it may seem stuck, its probably not. Just be patient."
+        flatpak run com.github.Matoking.protontricks $STEAMWINEID vcrun2019 corefonts &> /dev/null
 
-        reset
         clear
-        echo
         echo "==================================="
         echo "      Installation Complete!"
         echo "==================================="
         echo "If something didn't work you may try to just step through the commands passed in the script."
         echo
+        echo "You may want to change your font in the game options."
         echo "Please restart Steam"
         echo "Once restarted, launch the game and set your game options in the Ephinea launcher, eg. 1280x800 for Steam Deck"
         exit
