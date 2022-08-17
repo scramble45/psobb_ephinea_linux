@@ -25,6 +25,6 @@
 ```
 
 ---
-## Instructions:s
+## Instructions:
 ### Run the bash script:
 `./install.sh`
