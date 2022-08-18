@@ -8,7 +8,6 @@
 # however should work for systems with flatpak
 # that have a normal non flatpak Steam Install
 
-FILE=/usr/bin/steamtinkerlaunch
 INSTALLER=https://files.pioneer2.net/Ephinea_PSOBB_Installer.exe
 STL=https://github.com/frostworx/steamtinkerlaunch.git
 ICON=https://cdn2.steamgriddb.com/file/sgdb-cdn/icon/0224cd598e48c5041c7947fd5cb20d53.png
