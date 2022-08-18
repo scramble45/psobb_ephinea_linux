@@ -237,7 +237,14 @@ startInstall () {
     fi
 }
 
-welcome
-depChecks
-langaugeCheck
-startInstall
+
+if [ $1 = "--setlang" ]; then
+    langaugeCheck
+else
+    welcome
+    depChecks
+    langaugeCheck
+    startInstall
+fi
+
+
