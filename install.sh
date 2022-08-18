@@ -109,6 +109,35 @@ depChecks () {
     fi
 }
 
+# Add ja_JP.UTF-8 locale
+# In order for locale-gen to work you have to re-install glibc
+# Source: https://gist.github.com/XargonWan/cc660daf92c224b7241cbf5a2bf12c47
+addJPLang () {
+    echo "Disabling SteamOS Read Only!"
+    sudo steamos-readonly disable
+    sudo pacman-key --init
+    sudo pacman-key --populate archlinux
+    sudo pacman -S glibc --noconfirm
+    sudo sed -i "s%#ja_JP.UTF-8 UTF-8%ja_JP.UTF-8 UTF-8%" /etc/locale.gen
+    sudo locale-gen
+    sudo steamos-readonly enable
+    echo "Turned back on SteamOS Read Only!"
+}
+
+langaugeCheck () {
+    # Check if Steam Deck
+    if uname -a | grep 'Linux deck' &> /dev/null; then
+        echo "In order for Japanese fonts to show up in the game we need to disable read only on the filesystem temporarily."
+        read -p "Do you want to temporarily disable read-only file-system to add Japanese locale (y/n)?" choice
+        case "$choice" in 
+        y|Y ) addJPLang ;;
+        * ) echo "Skipping adding Japanese locale details, any japanese characters in the game will result in showing up as blocks.";;
+        esac
+    else
+        echo "If you encounter block characters in place of Japanese text in the game, please check you have ja_JP.UTF-8 added to your /etc/locale.gen"
+    fi
+}
+
 # Main Installation Function
 startInstall () {
     if [ -f "$HOME/Downloads/Ephinea_PSOBB_Installer.exe" ]; then
@@ -210,4 +239,5 @@ startInstall () {
 
 welcome
 depChecks
+langaugeCheck
 startInstall
