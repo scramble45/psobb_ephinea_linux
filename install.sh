@@ -83,6 +83,16 @@ depChecks () {
         esac
     fi
 
+    # Proton tricks install
+    protonTricksInstall () {
+        flatpak install -y --noninteractive com.github.Matoking.protontricks
+        if [ -d "/run/media/mmcblk0p1" ] 
+        then
+            echo "Overriding flatpak permissions for Proton Tricks so it can path to your SD card when needed"
+            flatpak override --user --filesystem=/run/media/mmcblk0p1 com.github.Matoking.protontricks
+        fi
+    }
+
     # Check if Proton Tricks is installed
     if flatpak list | grep protontricks &> /dev/null; then
         echo "Found existing Proton Tricks installation..."
@@ -90,7 +100,7 @@ depChecks () {
         echo "Proton Tricks - flatpak is needed to install VC2019 easily which is required by Ephinea to do DLL injection for the client."
         read -p "Do you want to continue with its installation (y/n)?" input
         case "$input" in
-            y|Y ) flatpak install -y --noninteractive com.github.Matoking.protontricks ;;
+            y|Y ) protonTricksInstall ;;
             * ) exit;;
         esac
     fi
